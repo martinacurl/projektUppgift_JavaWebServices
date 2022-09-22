@@ -2,7 +2,6 @@ package com.example.projektuppgift_javawebservices.services;
 
 import com.example.projektuppgift_javawebservices.dto.DtoRequest;
 import com.example.projektuppgift_javawebservices.dto.DtoResponse;
-import com.example.projektuppgift_javawebservices.dto.Post;
 import com.example.projektuppgift_javawebservices.entities.AppUser;
 import com.example.projektuppgift_javawebservices.repositories.AppUserRepo;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ public class AppUserService {
     private final AppUserRepo appUserRepo;
     private final WebClient webClient;
 
-    // dependency injection så här?
     public AppUserService(AppUserRepo appUserRepo, WebClient webClient) {
         this.appUserRepo = appUserRepo;
         this.webClient = webClient;
@@ -38,7 +36,7 @@ public class AppUserService {
     }
 
     public DtoResponse createUser(DtoRequest dtoRequest) {
-        AppUser newAppUser = appUserRepo.save(new AppUser(dtoRequest.username()));
+        AppUser newAppUser = appUserRepo.save(new AppUser(dtoRequest.username(), dtoRequest.password()));
 
         return new DtoResponse(newAppUser.getId(), newAppUser.getUsername());
     }
@@ -64,17 +62,6 @@ public class AppUserService {
         appUserRepo.deleteById(existingAppUser.getId());
 
         return new DtoResponse(existingAppUser.getId(), existingAppUser.getUsername());
-    }
-
-    public List<Post> findPostsByUser(int id) {
-        return webClient
-                .get()
-                .uri(uriBuilder -> uriBuilder.path("/posts")
-                        .queryParam("userId", id)
-                        .build())
-                .exchangeToFlux(clientResponse -> clientResponse.bodyToFlux(Post.class))
-                .buffer()
-                .blockLast();
 
     }
 }

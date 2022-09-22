@@ -2,7 +2,6 @@ package com.example.projektuppgift_javawebservices.controller;
 
 import com.example.projektuppgift_javawebservices.dto.DtoRequest;
 import com.example.projektuppgift_javawebservices.dto.DtoResponse;
-import com.example.projektuppgift_javawebservices.dto.Post;
 import com.example.projektuppgift_javawebservices.services.AppUserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,13 +44,5 @@ public class AppUserController {
     public DtoResponse deleteUserById(@PathVariable int id) {
         return appUserService.deleteUserById(id);
     }
-
-    @GetMapping("/{id}/posts")
-    public List<Post> findAllByUserId(
-            @PathVariable int id
-    ) {
-        return appUserService.findPostsByUser(id);
-    }
-
 
 }
