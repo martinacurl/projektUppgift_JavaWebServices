@@ -3,6 +3,7 @@ package com.example.projektuppgift_javawebservices.services;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -12,7 +13,8 @@ public class JwtUtils {
 
     private final int EXPIRATION_MILLIS = 1000 * 120;
 
-    private String secret = "secret";
+    @Value("${token.secret}")
+    private String secret;
 
     public String generateToken(String username){
         return Jwts.builder()
