@@ -13,11 +13,9 @@ import java.util.List;
 public class AppUserService {
 
     private final AppUserRepo appUserRepo;
-    private final WebClient webClient;
 
-    public AppUserService(AppUserRepo appUserRepo, WebClient webClient) {
+    public AppUserService(AppUserRepo appUserRepo) {
         this.appUserRepo = appUserRepo;
-        this.webClient = webClient;
     }
 
     public List<DtoResponse> findAll() {
